@@ -1,0 +1,63 @@
+<!--
+******************************************************************************
+ *
+ * File: ResultsView.axaml
+ *
+ * Description: Markup.
+ *
+ * Copyright (C) 2023 by Dmitry Sinitsyn
+ *
+ * Date: 18.8.2023	 Authors:  Dmitry Sinitsyn
+ *
+ *****************************************************************************
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+              xmlns:vm="clr-namespace:FirstLook.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+              x:DataType="vm:ResultsViewModel"
+             x:Class="FirstLook.Views.ResultsView">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition />
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <DockPanel LastChildFill="False" Grid.Row="0">
+      <Button  Content="+"  x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.StartTest}"/>
+      <Button  Content="Add log"  x:CompileBindings="False" Command="{Binding ImportLog}"/>
+      <Button IsEnabled="{Binding  !IsDataSourceEmpty}"  Content="Export"  x:CompileBindings="False" Command="{Binding Export}"/>
+    </DockPanel>
+
+    <DataGrid Name="dataGrid1"  GridLinesVisibility="Horizontal" SelectedIndex="0"  Grid.Row="1" IsVisible="{Binding  IsDataGridCanBeShowed}" ItemsSource="{Binding  TestValues.Result}" VerticalAlignment="Stretch">
+      <DataGrid.Styles>
+        <!--Without this style, the scroll is superimposed on the last row-->
+        <Style Selector="DataGridRowsPresenter">
+          <Setter Property="Margin" Value="0,0,20,20" />
+        </Style>
+        <!-- <Style Selector="DataGridRow:nth-child(odd)">
+          <Setter Property="Background" Value="#818ea3" />
+        </Style> -->
+      </DataGrid.Styles>
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Run Time" Binding="{Binding RunTime}" Width="*" MinWidth="160" IsReadOnly="True" />
+        <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="*" IsReadOnly="True" MinWidth="70"/>
+        <DataGridTextColumn Header="Hit ratio" IsReadOnly="True" Binding="{Binding HitRatio}" Width="*" MinWidth="90" />
+        <DataGridTextColumn Header="Processing time" IsReadOnly="True" Binding="{Binding ProcessingTime}" Width="*" MinWidth="140" />
+        <DataGridTextColumn Header="GC Collected" IsReadOnly="True" Binding="{Binding GcCollected}" Width="*" MinWidth="140" />
+        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="*"  MinWidth="180" />
+      </DataGrid.Columns>
+    </DataGrid>
+    <Label Grid.Row="1" FontWeight="Bold" FontSize="20" IsVisible="{Binding  IsDataSourceEmpty}" Content="The test results are empty. Please run the test to get the first results."
+               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <progRing:ProgressRing Grid.Row="1" Width="80"  Height="80" IsActive="True" IsVisible="{Binding  TestValues.IsNotCompleted}"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Foreground="Green"/>
+    
+    <Button Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Back"  x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.OpenHome}"/>
+  </Grid>
+</UserControl>

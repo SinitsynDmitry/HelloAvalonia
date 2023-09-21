@@ -1,0 +1,66 @@
+<!--
+******************************************************************************
+ *
+ * File: MainView.axaml
+ *
+ * Description: Markup.
+ *
+ * Copyright (C) 2023 by Dmitry Sinitsyn
+ *
+ * Date: 18.8.2023	 Authors:  Dmitry Sinitsyn
+ *
+ *****************************************************************************
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+              xmlns:views="clr-namespace:FirstLook.Views"
+             xmlns:vm="clr-namespace:FirstLook.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FirstLook.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+  <UserControl.Styles>
+    <Style Selector="TextBlock.h1">
+      <Setter Property="FontSize" Value="24"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="Margin" Value="0,0,0,10"/>
+    </Style>
+    <Style Selector="Button">
+      <Setter Property="Margin" Value="10" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="MinWidth" Value="200" />
+      <Setter Property="MinHeight" Value="20" />
+    </Style>
+  </UserControl.Styles>
+  <Grid>
+    <DockPanel Margin="20,10,20,20" >
+      <TextBlock DockPanel.Dock="Top" Classes="h1" Text="{Binding ContentViewModel.Header}" />
+      <Border DockPanel.Dock="Bottom" BorderBrush="LightBlue" BorderThickness="2" Padding="8">
+        <ContentControl Content="{Binding ContentViewModel}" IsHitTestVisible="{Binding !IsTestRunning }"/>
+      </Border>
+    </DockPanel>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsVisible="{Binding IsTestRunning}" Background="{DynamicResource  WindowDefaultBackground}">
+      <StackPanel Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="The test is now in progress..."
+                   FontWeight="Bold"/>
+        <Button Content="Cancel"  x:CompileBindings="False" IsEnabled="{Binding !IsTestCanceled}" Command="{Binding $parent[Window].DataContext.CancelTest}" />
+        
+        <progRing:ProgressRing Width="80"
+                   Height="80"
+                   IsActive="True"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Foreground="Green"/>
+      </StackPanel>
+    </Grid>
+  </Grid>
+
+</UserControl>

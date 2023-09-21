@@ -1,0 +1,27 @@
+<!--
+******************************************************************************
+ *
+ * File: MainWindow.axaml
+ *
+ * Description: Markup.
+ *
+ * Copyright (C) 2023 by Dmitry Sinitsyn
+ *
+ * Date: 18.8.2023	 Authors:  Dmitry Sinitsyn
+ *
+ *****************************************************************************
+-->
+
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FirstLook.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:FirstLook.Views"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        MinHeight="600" MinWidth="800"
+        x:Class="FirstLook.Views.MainWindow"
+        Icon="/Assets/D.ico"
+        Title="FirstLook">
+  <views:MainView />
+</Window>

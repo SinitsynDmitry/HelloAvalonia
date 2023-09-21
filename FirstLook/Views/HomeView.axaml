@@ -1,0 +1,29 @@
+<!--
+******************************************************************************
+ *
+ * File: HomeView.axaml
+ *
+ * Description: Markup.
+ *
+ * Copyright (C) 2023 by Dmitry Sinitsyn
+ *
+ * Date: 18.8.2023	 Authors:  Dmitry Sinitsyn
+ *
+ *****************************************************************************
+-->
+
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:FirstLook.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:HomeViewModel"
+             x:Class="FirstLook.Views.HomeView">
+      <StackPanel Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button Content="Start"  x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.StartTest}" />
+        <Button Content="Results" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.OpenResults}"/>
+        <Button Content="Settings" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.OpenSettings}"/>
+        <Button Content="Exit"  x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.Exit}" />
+      </StackPanel>
+</UserControl>
